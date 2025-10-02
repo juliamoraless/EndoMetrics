@@ -1,0 +1,6 @@
+@EndoMetricsAPI_HostAddress = http://localhost:5157
+
+GET {{EndoMetricsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
