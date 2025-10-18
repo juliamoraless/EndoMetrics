@@ -26,9 +26,9 @@ public class AuthService: IAuthService
         _configuration = configuration;
         
     }
-    public async Task<User?> RegisterAsync(UserDto request)
+    public async Task<User?> RegisterAsync(UserRegisterDto request)
     {
-        if (await _context.Users.AnyAsync(u => u.Username == request.Username))
+        if (await _context.Users.AnyAsync(u => u.Email == request.Email))
         {
             return null;
         }
@@ -37,6 +37,7 @@ public class AuthService: IAuthService
         var hashedPassword = new PasswordHasher<User>()
             .HashPassword(user, request.Password);
         user.Username = request.Username;
+        user.Email = request.Email;
         user.PasswordHash = hashedPassword;
 
         _context.Users.Add(user);
@@ -45,9 +46,9 @@ public class AuthService: IAuthService
         return user;
     }
 
-    public async Task<TokenResponseDto> LoginAsync(UserDto request)
+    public async Task<TokenResponseDto> LoginAsync(UserLoginDto request)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             
         if (user is null)
         {
