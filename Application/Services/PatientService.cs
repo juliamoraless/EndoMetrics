@@ -82,4 +82,80 @@ public class PatientService : IPatientService
             HasSurgeryData = p.SurgeryData != null
         });
     }
+    public async Task UpdatePatientAsync(string id, UpdatePatientDto dto)
+{
+    // 1. Busca a paciente existente (já trazendo os dados cirúrgicos atuais)
+    var patient = await _repository.GetByIdAsync(id);
+    if (patient == null)
+    {
+        throw new Exception("Paciente não encontrada.");
+    }
+
+    // 2. Valida se o novo prontuário já pertence a outra paciente
+    if (patient.MedicalRecordNumber != dto.MedicalRecordNumber)
+    {
+        var duplicatePatient = await _repository.GetByMedicalRecordNumberAsync(dto.MedicalRecordNumber);
+        if (duplicatePatient != null)
+        {
+            throw new Exception("Já existe outra paciente cadastrada com este número de prontuário.");
+        }
+    }
+
+    // 3. Valida a nova data de nascimento
+    if (!DateTime.TryParse(dto.BirthDate, out DateTime parsedDate))
+    {
+        throw new Exception("Formato de data de nascimento inválido.");
+    }
+    if (parsedDate > DateTime.UtcNow)
+    {
+        throw new Exception("A data de nascimento não pode estar no futuro.");
+    }
+
+    // 4. Atualiza os dados da entidade principal
+    patient.BirthDate = dto.BirthDate;
+    patient.MedicalRecordNumber = dto.MedicalRecordNumber;
+
+    // 5. Atualiza ou adiciona os dados cirúrgicos
+    if (dto.SurgeryData != null)
+    {
+        if (patient.SurgeryData == null)
+        {
+            // Se ela não tinha dados cirúrgicos antes, cria um novo
+            patient.SurgeryData = new SurgeryData
+            {
+                Id = Guid.NewGuid().ToString(),
+                PatientId = patient.Id,
+                InfertilityYears = dto.SurgeryData.InfertilityYears,
+                PreviousPregnancy = dto.SurgeryData.PreviousPregnancy,
+                SurgicalFindings = new SurgicalFindings(dto.SurgeryData.FimbriaScore, dto.SurgeryData.OvaryScore),
+                AfsScore = new AfsScore(dto.SurgeryData.EndometriosisScore, dto.SurgeryData.TotalScore)
+            };
+        }
+        else
+        {
+            // Se já tinha, substitui os valores (os records são imutáveis, então criamos uma nova instância deles)
+            patient.SurgeryData.InfertilityYears = dto.SurgeryData.InfertilityYears;
+            patient.SurgeryData.PreviousPregnancy = dto.SurgeryData.PreviousPregnancy;
+            patient.SurgeryData.SurgicalFindings = new SurgicalFindings(dto.SurgeryData.FimbriaScore, dto.SurgeryData.OvaryScore);
+            patient.SurgeryData.AfsScore = new AfsScore(dto.SurgeryData.EndometriosisScore, dto.SurgeryData.TotalScore);
+        }
+    }
+    else
+    {
+        // Se na atualização o objeto SurgeryData veio nulo, significa que queremos remover os dados cirúrgicos dela
+        patient.SurgeryData = null;
+    }
+
+    // 6. Envia para o repositório salvar
+    await _repository.UpdateAsync(patient);
+}
+
+public async Task<bool> DeletePatientAsync(string id)
+{
+    // O Cascade que configuramos no OnModelCreating garante que 
+    // se o repositório deletar a Patient, o banco deleta o SurgeryData dela sozinho.
+    return await _repository.DeleteAsync(id);
+}
+    
+    
 }

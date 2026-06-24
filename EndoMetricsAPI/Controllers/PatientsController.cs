@@ -39,4 +39,34 @@ public class PatientsController : ControllerBase
         var patients = await _patientService.GetAllPatientsAsync();
         return Ok(patients); // Retorna 200 OK com a lista
     }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(string id, [FromBody] UpdatePatientDto dto)
+    {
+        try
+        {
+            await _patientService.UpdatePatientAsync(id, dto);
+            return NoContent(); // Retorna 204 NoContent padrão para atualizações bem-sucedidas
+        }
+        catch (Exception ex)
+        {
+            if (ex.Message == "Paciente não encontrada.")
+                return NotFound(new { Error = ex.Message });
+
+            return BadRequest(new { Error = ex.Message });
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var deleted = await _patientService.DeletePatientAsync(id);
+    
+        if (!deleted)
+        {
+            return NotFound(new { Error = "Paciente não encontrada." });
+        }
+
+        return NoContent(); // Retorna 204 NoContent para deleções bem-sucedidas
+    }
 }
