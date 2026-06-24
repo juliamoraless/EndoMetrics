@@ -1,6 +1,6 @@
-using Domain.Dtos;
-using Domain.Dtos.Request;
-using Domain.Dtos.Response;
+using Application.DTOs.Request;
+using Domain.DTOs.Request;
+using Domain.DTOs.Response;
 using Domain.Models;
 
 namespace Domain.Interfaces;

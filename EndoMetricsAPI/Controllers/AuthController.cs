@@ -1,15 +1,10 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Domain.Dtos;
-using Domain.Dtos.Request;
-using Domain.Dtos.Response;
+using Application.DTOs.Request;
+using Domain.DTOs.Request;
+using Domain.DTOs.Response;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace EndoMetricsAPI.Controllers;
 

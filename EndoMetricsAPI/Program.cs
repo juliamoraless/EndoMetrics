@@ -2,6 +2,7 @@ using System.Text;
 using Application.Services;
 using Domain.Interfaces;
 using Infra;
+using Infra.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -33,6 +34,8 @@ builder.Services.AddDbContext<EndoMetricsContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IPatientService, PatientService>();
 
 var app = builder.Build();
 
