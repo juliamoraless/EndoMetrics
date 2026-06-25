@@ -19,10 +19,12 @@
       <Compile Remove="Class1.cs" />
       <Compile Remove="Dtos\**" />
       <Compile Include="DTOs\Patient\CreatePatientDto.cs" />
-      <Compile Include="DTOs\Patient\CreateSurgeryDataDto.cs" />
       <Compile Include="DTOs\Patient\PatientResponseDto.cs" />
       <Compile Include="DTOs\Patient\UpdatePatientDto.cs" />
-      <Compile Include="DTOs\Patient\UpdateSurgeryDataDto.cs" />
+      <Compile Remove="DTOs\Request\**" />
+      <Compile Include="DTOs\SurgeryData\CreateSurgeryDataDto.cs" />
+      <Compile Include="DTOs\SurgeryData\SurgeryDataResponseDto.cs" />
+      <Compile Include="DTOs\SurgeryData\UpdateSurgeryDataDto.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -32,18 +34,16 @@
 
     <ItemGroup>
       <EmbeddedResource Remove="Dtos\**" />
+      <EmbeddedResource Remove="DTOs\Request\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Dtos\**" />
+      <None Remove="DTOs\Request\**" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="DTOs\.DS_Store" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="DTOs\Request\" />
     </ItemGroup>
 
 </Project>

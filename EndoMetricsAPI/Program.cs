@@ -1,6 +1,8 @@
 using System.Text;
+using Application.Repositories;
 using Application.Services;
 using Domain.Interfaces;
+using Domain.Interfaces.Repositories;
 using Infra;
 using Infra.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,15 +33,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddDbContext<EndoMetricsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+// ADICIONADO: Configuração do CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<ISurgeryDataRepository, SurgeryDataRepository>();
+builder.Services.AddScoped<ISurgeryDataService, SurgeryDataService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -48,8 +62,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
+
 app.UseAuthorization();
 
 app.MapControllers();
 
- app.Run();
+app.Run();

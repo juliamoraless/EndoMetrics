@@ -1,3 +1,5 @@
+using Application.DTOs.SurgeryData;
+
 namespace Application.DTOs.Patient;
 
 public class UpdatePatientDto

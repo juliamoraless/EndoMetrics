@@ -1,6 +1,8 @@
 using Application.DTOs;
 using Application.DTOs.Patient;
+using Application.Repositories;
 using Domain.Interfaces;
+using Domain.Interfaces.Repositories;
 using Domain.Models;
 
 namespace Application.Services;

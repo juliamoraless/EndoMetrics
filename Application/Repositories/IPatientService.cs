@@ -1,7 +1,7 @@
 
 using Application.DTOs.Patient;
 
-namespace Application.Services;
+namespace Application.Repositories;
 
 public interface IPatientService
 {

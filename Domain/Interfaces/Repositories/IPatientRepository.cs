@@ -1,6 +1,6 @@
 using Domain.Models;
 
-namespace Domain.Interfaces;
+namespace Domain.Interfaces.Repositories;
 
 public interface IPatientRepository
 {

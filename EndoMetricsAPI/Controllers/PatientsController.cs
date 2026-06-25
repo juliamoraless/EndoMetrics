@@ -1,5 +1,6 @@
 using Application.DTOs;
 using Application.DTOs.Patient;
+using Application.Repositories;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
