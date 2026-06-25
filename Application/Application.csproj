@@ -17,11 +17,33 @@
 
     <ItemGroup>
       <Compile Remove="Class1.cs" />
+      <Compile Remove="Dtos\**" />
+      <Compile Include="DTOs\Patient\CreatePatientDto.cs" />
+      <Compile Include="DTOs\Patient\PatientResponseDto.cs" />
+      <Compile Include="DTOs\Patient\UpdatePatientDto.cs" />
+      <Compile Remove="DTOs\Request\**" />
+      <Compile Include="DTOs\SurgeryData\CreateSurgeryDataDto.cs" />
+      <Compile Include="DTOs\SurgeryData\SurgeryDataResponseDto.cs" />
+      <Compile Include="DTOs\SurgeryData\UpdateSurgeryDataDto.cs" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\Infra\Infra.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Dtos\**" />
+      <EmbeddedResource Remove="DTOs\Request\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Dtos\**" />
+      <None Remove="DTOs\Request\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="DTOs\.DS_Store" />
     </ItemGroup>
 
 </Project>

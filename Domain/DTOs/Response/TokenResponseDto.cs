@@ -1,4 +1,4 @@
-namespace Domain.Dtos.Response;
+namespace Domain.DTOs.Response;
 
 public class TokenResponseDto
 {

@@ -1,4 +1,4 @@
-namespace Domain.Dtos.Request;
+namespace Application.DTOs.Request;
 
 public class UserLoginDto
 {

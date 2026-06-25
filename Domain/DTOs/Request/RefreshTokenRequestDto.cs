@@ -1,4 +1,4 @@
-namespace Domain.Dtos.Request;
+namespace Domain.DTOs.Request;
 
 public class RefreshTokenRequestDto
 {

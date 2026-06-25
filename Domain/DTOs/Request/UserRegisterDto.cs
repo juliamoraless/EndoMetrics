@@ -1,4 +1,4 @@
-namespace Domain.Dtos;
+namespace Application.DTOs.Request;
 
 public class UserRegisterDto
 {

@@ -4,6 +4,7 @@ using Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(EndoMetricsContext))]
-    partial class EndoMetricsContextModelSnapshot : ModelSnapshot
+    [Migration("20260518020136_addPatientAndSurgeryData")]
+    partial class addPatientAndSurgeryData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Patients", (string)null);
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -69,7 +72,7 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SurgeryData", b =>
@@ -118,7 +121,7 @@ namespace Infra.Migrations
 
                             b1.HasKey("SurgeryDataId");
 
-                            b1.ToTable("SurgeryDatas", (string)null);
+                            b1.ToTable("SurgeryDatas");
 
                             b1.WithOwner()
                                 .HasForeignKey("SurgeryDataId");
@@ -139,7 +142,7 @@ namespace Infra.Migrations
 
                             b1.HasKey("SurgeryDataId");
 
-                            b1.ToTable("SurgeryDatas", (string)null);
+                            b1.ToTable("SurgeryDatas");
 
                             b1.WithOwner()
                                 .HasForeignKey("SurgeryDataId");
